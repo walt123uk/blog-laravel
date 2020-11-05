@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Blog Demo | Flowkl</title>
+    <title>Blog Demo</title>
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
     <!-- Fonts -->
     <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
@@ -25,7 +25,6 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="https://www.flowkl.com">Flowkl</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
@@ -57,7 +56,7 @@
                                 <a href="{{ url('/user/'.Auth::id()) }}">My Profile</a>
                             </li>
                             <li>
-                                <a href="{{ url('/auth/logout') }}">Logout</a>
+                                <a href="{{ url('/logout') }}">Logout</a>
                             </li>
                         </ul>
                     </li>
@@ -96,11 +95,6 @@
                     @yield('content')
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <p>Copyright © 2015 | <a href="https://www.flowkl.com">Flowkl</a></p>
         </div>
     </div>
 </div>

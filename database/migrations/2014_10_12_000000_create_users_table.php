@@ -19,8 +19,6 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            //add role can be one of three defaut author
-            $table->enum('role',['admin','author','subscriber'])->default('author');
             $table->rememberToken();
             $table->timestamps();
         });

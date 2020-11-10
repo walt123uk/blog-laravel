@@ -28,16 +28,13 @@ class PostController extends Controller
 
     public function create(Request $request)
     {
-        //
-        if ($request->user()->can_post()) {
-            return view('posts.create');
-        } else {
-            return redirect('/')->withErrors('You have not sufficient permissions for writing post');
-        }
+        return view('posts.create');
     }
 
     public function store(PostFormRequest $request)
     {
+
+        dd('here');
         $post = new Posts();
         $post->title = $request->get('title');
         $post->body = $request->get('body');

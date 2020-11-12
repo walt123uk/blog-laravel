@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -17,14 +18,13 @@ use App\Http\Controllers\PostController;
 */
 Route::get('/', [PostController::class, 'index']);
 Route::get('/home', [PostController::class, 'index']);
-Route::get('/logout', [UserController::class, 'logout']);
+Route::get('/logout', [LoginController::class, 'logout']);
 
 Route::group(['prefix' => 'auth'], function () {
     Auth::routes();
 });
 
 // check for logged in user
-
 Route::group(['middleware' => ['role:author']], function () {
     // show new post form
     Route::get('new-post', [PostController::class, 'create']);
@@ -72,4 +72,4 @@ Route::get('user/{id}', [UserController::class, 'profile'])->where('id', '[0-9]+
 // display list of posts
 Route::get('user/{id}/posts', [UserController::class, 'user_posts'])->where('id', '[0-9]+');
 // display single post
-Route::get('/{slug}', ['as' => 'post', 'uses' => [PostController::class, 'show']])->where('slug', '[A-Za-z0-9-_]+');
+Route::get('/{slug}', [PostController::class, 'show'])->where('slug', '[A-Za-z0-9-_]+');

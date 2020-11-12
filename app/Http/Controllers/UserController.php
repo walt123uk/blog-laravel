@@ -10,6 +10,7 @@ class UserController extends Controller
 {
     public function logout()
     {
+        dd('here');
         Auth::logout();
         return redirect('/');
     }

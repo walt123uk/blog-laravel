@@ -33,8 +33,6 @@ class PostController extends Controller
 
     public function store(PostFormRequest $request)
     {
-
-        dd('here');
         $post = new Posts();
         $post->title = $request->get('title');
         $post->body = $request->get('body');
@@ -70,7 +68,7 @@ class PostController extends Controller
     public function edit(Request $request,$slug)
     {
         $post = Posts::where('slug',$slug)->first();
-        if($post && ($request->user()->id == $post->author_id || $request->user()->is_admin()))
+        if($post && ($request->user()->id == $post->author_id || $request->user()->can('edit posts')))
             return view('posts.edit')->with('post',$post);
         return redirect('/')->withErrors('you have not sufficient permissions');
     }
@@ -80,7 +78,7 @@ class PostController extends Controller
         //
         $post_id = $request->input('post_id');
         $post = Posts::find($post_id);
-        if ($post && ($post->author_id == $request->user()->id || $request->user()->is_admin())) {
+        if ($post && ($post->author_id == $request->user()->id || $request->user()->can('edit posts'))) {
             $title = $request->input('title');
             $slug = Str::slug($title);
             $duplicate = Posts::where('slug', $slug)->first();
@@ -115,7 +113,7 @@ class PostController extends Controller
     {
         //
         $post = Posts::find($id);
-        if($post && ($post->author_id == $request->user()->id || $request->user()->is_admin()))
+        if($post && ($post->author_id == $request->user()->id || $request->user()->can('delete posts')))
         {
             $post->delete();
             $data['message'] = 'Post deleted Successfully';

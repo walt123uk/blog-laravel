@@ -62,7 +62,7 @@ class UserController extends Controller
     /**
      * profile for user
      */
-    public function profile(Request $request, $id)
+    public function show(Request $request, $id)
     {
         $data['user'] = User::find($id);
         if (!$data['user'])

@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Comments;
+use App\Http\Requests\CommentFormRequest;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function store(Request $request)
+    public function store(CommentFormRequest $request)
     {
         //on_post, from_user, body
         $input['from_user'] = $request->user()->id;

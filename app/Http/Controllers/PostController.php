@@ -108,11 +108,14 @@ class PostController extends Controller
             return redirect('/')->withErrors('you have not sufficient permissions');
         }
     }
-
-    public function destroy(Request $request, $id)
+    /*
+  * Delete of a particular post
+  *
+  * @param Posts $post
+  * @return view
+  */
+    public function destroy(Request $request, Posts $post)
     {
-        //
-        $post = Posts::find($id);
         if($post && ($post->author_id == $request->user()->id || $request->user()->can('delete posts')))
         {
             $post->delete();

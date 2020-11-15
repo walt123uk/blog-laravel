@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserPostsController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
@@ -35,20 +36,18 @@ Route::group(['middleware' => ['role:author']], function () {
     // update post
     Route::post('update', [PostController::class, 'update']);
     // delete post
-    Route::get('delete/{id}', [PostController::class, 'destroy']);
+    Route::get('delete/{post}', [PostController::class, 'destroy']);
     // display user's all posts
-    Route::get('my-all-posts', [UserController::class, 'user_posts_all']);
+    Route::get('my-all-posts', [UserPostsController::class, 'user_posts_all']);
     // display user's drafts
-    Route::get('my-drafts', [UserController::class, 'user_posts_draft']);
+    Route::get('my-drafts', [UserPostsController::class, 'user_posts_draft']);
     // store comment
     Route::post('comment/store', [CommentController::class, 'store']);
-    // delete comment
-    Route::post('comment/delete/{id}', [CommentController::class, 'destroy']);
 });
 
 //users profile
-Route::get('user/{id}', [UserController::class, 'show'])->where('id', '[0-9]+');
+Route::get('user/{user}', [UserProfileController::class, 'show'])->where('user.id', '[0-9]+');
 // display list of posts
-Route::get('user/{id}/posts', [UserController::class, 'user_posts'])->where('id', '[0-9]+');
+Route::get('user/{user}/posts', [UserPostsController::class, 'user_posts'])->where('user.id', '[0-9]+');
 // display single post
 Route::get('/{slug}', [PostController::class, 'show'])->where('slug', '[A-Za-z0-9-_]+');

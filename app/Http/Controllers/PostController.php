@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Posts;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostFormRequest;
+use Spatie\Tags\Tag;
 
 class PostController extends Controller
 {
@@ -41,6 +42,7 @@ class PostController extends Controller
         $duplicate = Posts::where('slug', $post->slug)->first();
         if ($duplicate) {
             $post->title .= '_1';
+            $post->slug .= '_1';
         }
 
         $post->author_id = $request->user()->id;
@@ -68,14 +70,17 @@ class PostController extends Controller
     public function edit(Request $request,$slug)
     {
         $post = Posts::where('slug',$slug)->first();
+        $tags = $post->tags()->get();
+        $tagsAll = Tag::get();
         if($post && ($request->user()->id == $post->author_id || $request->user()->can('edit posts')))
-            return view('posts.edit')->with('post',$post);
+            return view('posts.edit',compact('post','tags','tagsAll'));
         return redirect('/')->withErrors('you have not sufficient permissions');
     }
 
     public function update(Request $request)
     {
         //
+
         $post_id = $request->input('post_id');
         $post = Posts::find($post_id);
         if ($post && ($post->author_id == $request->user()->id || $request->user()->can('edit posts'))) {
@@ -103,6 +108,7 @@ class PostController extends Controller
                 $landing = $post->slug;
             }
             $post->save();
+            $post->syncTags($request->input('tags'));
             return redirect($landing)->withMessage($message);
         } else {
             return redirect('/')->withErrors('you have not sufficient permissions');

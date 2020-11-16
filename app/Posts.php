@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Posts extends Model
 {
+    use \Spatie\Tags\HasTags;
     use HasFactory;
     //restricts columns from modifying
     protected $guarded = [];

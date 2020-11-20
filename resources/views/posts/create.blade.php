@@ -8,7 +8,7 @@
 
 @section('content')
 
-    <form action="/new-post" method="post">
+    <form action="/posts" method="post">
 
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 

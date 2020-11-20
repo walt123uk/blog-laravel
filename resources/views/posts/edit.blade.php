@@ -3,7 +3,7 @@
     Edit Post
 @endsection
 @section('content')
-    <form method="post" action='{{ url("/update") }}'>
+    <form method="post" action='{{ url("post") }}'>
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="post_id" value="{{ $post->id }}{{ old('post_id') }}">
         <div class="form-group">
@@ -32,6 +32,5 @@
             <input type="submit" name='publish' class="btn btn-success" value="Publish"/>
         @endif
         <input type="submit" name='save' class="btn btn-default" value="Save As Draft"/>
-        <a href="{{  url('delete/'.$post->id.'?_token='.csrf_token()) }}" class="btn btn-danger">Delete</a>
     </form>
 @endsection

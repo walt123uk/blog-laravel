@@ -49,7 +49,7 @@
                         <ul class="dropdown-menu" role="menu">
                             @can('create posts')
                                 <li>
-                                    <a href="{{ url('/new-post') }}">Add new post</a>
+                                    <a href="{{ url('/post/create') }}">Add new post</a>
                                 </li>
                                 <li>
                                     <a href="{{ url('/user/'.Auth::id().'/posts') }}">My Posts</a>

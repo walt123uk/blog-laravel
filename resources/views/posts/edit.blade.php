@@ -3,6 +3,15 @@
     Edit Post
 @endsection
 @section('content')
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: '#edittextarea',  init_instance_callback : function(editor) {
+                var freeTiny = document.querySelector('.tox .tox-notification--in');
+                freeTiny.style.display = 'none';
+            }
+        });
+    </script>
     <form method="post" action='{{ url("post") }}'>
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="post_id" value="{{ $post->id }}{{ old('post_id') }}">
@@ -13,7 +22,7 @@
         </div>
         <div class="form-group">
             <label>Content</label>
-            <textarea name='body' class="form-control">
+            <textarea id="edittextarea" name='body' class="form-control">
               @if(!old('body'))
                     {!! $post->body !!}
                 @endif

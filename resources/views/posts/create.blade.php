@@ -8,6 +8,15 @@
 
 @section('content')
 
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script type="text/javascript">
+        tinymce.init({
+            selector: '#createtextarea',  init_instance_callback : function(editor) {
+                var freeTiny = document.querySelector('.tox .tox-notification--in');
+                freeTiny.style.display = 'none';
+            }
+        });
+    </script>
     <form action="/posts" method="post">
 
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -20,7 +29,7 @@
 
         <div class="form-group">
 
-            <textarea name='body'class="form-control">{{ old('body') }}</textarea>
+            <textarea id="createtextarea" name='body'class="form-control">{{ old('body') }}</textarea>
 
         </div>
 

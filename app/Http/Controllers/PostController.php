@@ -54,7 +54,7 @@ class PostController extends Controller
             $message = 'Post published successfully';
         }
         $post->save();
-        return redirect('post/' . $post->slug. '/edit')->withMessage($message);
+        return redirect('post/' . $post->slug)->withMessage($message);
     }
 
     public function show($slug)

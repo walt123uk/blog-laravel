@@ -12,7 +12,6 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     use HasRoles;
-
     use HasFactory, Notifiable;
     /**
      * The database table used by the model.

@@ -1,4 +1,11 @@
 @extends('layouts.app')
+@section('image')
+    @if($post)
+        @if(!Auth::guest() && ($post->author_id == Auth::user()->id || Auth::user()->is_admin()))
+            <img src="{{ $post->getMedia('avatar')->first()->getUrl() }}">
+        @endif
+    @endif
+@endsection
 @section('title')
     @if($post)
         {{ $post->title }}

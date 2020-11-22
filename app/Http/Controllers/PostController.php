@@ -53,6 +53,9 @@ class PostController extends Controller
             $post->active = 1;
             $message = 'Post published successfully';
         }
+        if ($request->hasFile('avatar') && $request->file('avatar')->isValid()) {
+            $post->addMediaFromRequest('avatar')->toMediaCollection('avatar');
+        }
         $post->save();
         return redirect('post/' . $post->slug)->withMessage($message);
     }
@@ -67,13 +70,13 @@ class PostController extends Controller
         return view('posts.show')->withPost($post)->withComments($comments);
     }
 
-    public function edit(Request $request,$slug)
+    public function edit(Request $request, $slug)
     {
-        $post = Posts::where('slug',$slug)->first();
+        $post = Posts::where('slug', $slug)->first();
         $tags = $post->tags()->get();
         $tagsAll = Tag::get();
-        if($post && ($request->user()->id == $post->author_id || $request->user()->can('edit posts')))
-            return view('posts.edit',compact('post','tags','tagsAll'));
+        if ($post && ($request->user()->id == $post->author_id || $request->user()->can('edit posts')))
+            return view('posts.edit', compact('post', 'tags', 'tagsAll'));
         return redirect('/')->withErrors('you have not sufficient permissions');
     }
 
@@ -114,6 +117,7 @@ class PostController extends Controller
             return redirect('/')->withErrors('you have not sufficient permissions');
         }
     }
+
     /*
   * Delete of a particular post
   *
@@ -122,13 +126,10 @@ class PostController extends Controller
   */
     public function destroy(Request $request, Posts $post)
     {
-        if($post && ($post->author_id == $request->user()->id || $request->user()->can('delete posts')))
-        {
+        if ($post && ($post->author_id == $request->user()->id || $request->user()->can('delete posts'))) {
             $post->delete();
             $data['message'] = 'Post deleted Successfully';
-        }
-        else
-        {
+        } else {
             $data['errors'] = 'Invalid Operation. You have not sufficient permissions';
         }
         return redirect('/')->with($data);

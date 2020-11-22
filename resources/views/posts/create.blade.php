@@ -17,7 +17,7 @@
             }
         });
     </script>
-    <form action="/posts" method="post">
+    <form action="/post" method="post" enctype="multipart/form-data">
 
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -33,6 +33,13 @@
 
         </div>
 
+        <div class="form-group row">
+            <label for="avatar" class="col-md-4 col-form-label text-md-right">{{ __('Avatar (optional)') }}</label>
+
+            <div class="col-md-6">
+                <input id="avatar" type="file" class="form-control" name="avatar">
+            </div>
+        </div>
         <input type="submit" name='publish' class="btn btn-success" value = "Publish"/>
 
         <input type="submit" name='save' class="btn btn-default" value = "Save Draft" />

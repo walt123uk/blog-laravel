@@ -4,9 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Testing\Concerns\InteractsWithConsole;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Posts extends Model
+class Posts extends Model implements HasMedia
 {
+    use InteractsWithMedia;
     use \Spatie\Tags\HasTags;
     use HasFactory;
     //restricts columns from modifying

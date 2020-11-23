@@ -18,7 +18,7 @@
                                     <button class="btn" style="float: right"><a href="{{ url('post/'.$post->slug).'/edit'}}">Edit Draft</a></button>
                                 @endif
                             @endif
-                            <form action="{{ url('post/'.$post->slug) }}" method="POST">
+                            <form action="{{ url('post/'.$post->id) }}" method="POST">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button class="btn" style="float: right">Delete Post</button>

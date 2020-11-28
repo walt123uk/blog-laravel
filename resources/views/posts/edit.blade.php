@@ -12,7 +12,8 @@
             }
         });
     </script>
-    <form method="post" action='{{ url("post") }}'>
+    <form method="post" action='{{ url('post/'.$post->id) }}'>
+        <input type="hidden" name="_method" value="PATCH">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <input type="hidden" name="post_id" value="{{ $post->id }}{{ old('post_id') }}">
         <div class="form-group">

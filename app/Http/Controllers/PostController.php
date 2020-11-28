@@ -44,7 +44,6 @@ class PostController extends Controller
             $post->title .= '_1';
             $post->slug .= '_1';
         }
-
         $post->author_id = $request->user()->id;
         if ($request->has('save')) {
             $post->active = 0;
@@ -57,12 +56,13 @@ class PostController extends Controller
             $post->addMediaFromRequest('avatar')->toMediaCollection('avatar');
         }
         $post->save();
-        return redirect('post/' . $post->slug)->withMessage($message);
+        return redirect('post/' . $post->id)->withMessage($message);
+
     }
 
-    public function show($slug)
+    public function show(Posts $post)
     {
-        $post = Posts::where('slug', $slug)->first();
+        //$post = Posts::where('slug', $slug)->first();
         if (!$post) {
             return redirect('/')->withErrors('requested page not found');
         }
@@ -70,9 +70,8 @@ class PostController extends Controller
         return view('posts.show')->withPost($post)->withComments($comments);
     }
 
-    public function edit(Request $request, $slug)
+    public function edit(Request $request, Posts $post)
     {
-        $post = Posts::where('slug', $slug)->first();
         $tags = $post->tags()->get();
         $tagsAll = Tag::get();
         if ($post && ($request->user()->id == $post->author_id || $request->user()->can('edit posts')))
@@ -80,16 +79,14 @@ class PostController extends Controller
         return redirect('/')->withErrors('you have not sufficient permissions');
     }
 
-    public function update(Request $request)
+    public function update(Request $request, Posts $post)
     {
-        $post_id = $request->input('post_id');
-        $post = Posts::find($post_id);
         if ($post && ($post->author_id == $request->user()->id || $request->user()->can('edit posts'))) {
             $title = $request->input('title');
             $slug = Str::slug($title);
             $duplicate = Posts::where('slug', $slug)->first();
             if ($duplicate) {
-                if ($duplicate->id != $post_id) {
+                if ($duplicate->id != $post->id) {
                     return redirect('edit/' . $post->slug)->withErrors('Title already exists.')->withInput();
                 } else {
                     $post->slug = $slug;
@@ -102,11 +99,11 @@ class PostController extends Controller
             if ($request->has('save')) {
                 $post->active = 0;
                 $message = 'Post saved successfully';
-                $landing = 'edit/' . $post->slug;
+                $landing = 'post/' . $post->id;
             } else {
                 $post->active = 1;
                 $message = 'Post updated successfully';
-                $landing = $post->slug;
+                $landing = 'post/'. $post->id;
             }
             $post->save();
             $post->syncTags($request->input('tags'));

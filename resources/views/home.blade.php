@@ -10,12 +10,12 @@
             @foreach( $posts as $post )
                 <div class="list-group">
                     <div class="list-group-item">
-                        <h3><a href="{{ url('post/'.$post->slug) }}">{{ $post->title }}</a>
+                        <h3><a href="{{ url('post/'.$post->id) }}">{{ $post->title }}</a>
                             @if(!Auth::guest() && ($post->author_id == Auth::user()->id || Auth::user()->is_admin()))
                                 @if($post->active == '1')
-                                    <button class="btn" style="float: right"><a href="{{ url('post/'.$post->slug.'/edit')}}">Edit Post</a></button>
+                                    <button class="btn" style="float: right"><a href="{{ url('post/'.$post->id.'/edit')}}">Edit Post</a></button>
                                 @else
-                                    <button class="btn" style="float: right"><a href="{{ url('post/'.$post->slug).'/edit'}}">Edit Draft</a></button>
+                                    <button class="btn" style="float: right"><a href="{{ url('post/'.$post->id).'/edit'}}">Edit Draft</a></button>
                                 @endif
                             @endif
                             <form action="{{ url('post/'.$post->id) }}" method="POST">

@@ -47,7 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 // store comment
-Route::post('comment/store', [CommentController::class, 'store']);
+Route::post('comment/store', [CommentController::class, 'store'])->middleware('throttle:comments');
 //users profile
 Route::get('user/{user}', [UserProfileController::class, 'show'])->where('user.id', '[0-9]+');
 // display list of posts

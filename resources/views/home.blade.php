@@ -7,6 +7,7 @@
         There is no post till now. Login and write a new post now!!!
     @else
         <div class="">
+            <x-alert message="Message Variable"></x-alert>
             @foreach( $posts as $post )
                 <div class="list-group">
                     <div class="list-group-item">

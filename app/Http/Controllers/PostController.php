@@ -57,7 +57,6 @@ class PostController extends Controller
         }
         $post->save();
         return redirect('post/' . $post->id)->withMessage($message);
-
     }
 
     public function show(Posts $post)
@@ -103,7 +102,7 @@ class PostController extends Controller
             } else {
                 $post->active = 1;
                 $message = 'Post updated successfully';
-                $landing = 'post/'. $post->id;
+                $landing = 'post/' . $post->id;
             }
             $post->save();
             $post->syncTags($request->input('tags'));

@@ -31,16 +31,16 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="{{ url('/') }}">Home</a>
+                    <a href="{{ route('home') }}">Home</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::guest())
                     <li>
-                        <a href="{{ url('/auth/login') }}">Login</a>
+                        <a href="{{ route('login') }}">Login</a>
                     </li>
                     <li>
-                        <a href="{{ url('/auth/register') }}">Register</a>
+                        <a href="{{ route('register') }}">Register</a>
                     </li>
                 @else
                     <li class="dropdown">
@@ -49,17 +49,17 @@
                         <ul class="dropdown-menu" role="menu">
                             @can('create posts')
                                 <li>
-                                    <a href="{{ url('/post/create') }}">Add new post</a>
+                                    <a href="{{ route('post.create') }}">Add new post</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('/user/'.Auth::id().'/posts') }}">My Posts</a>
+                                    <a href="{{ route('user.posts', Auth::user()) }}">My Posts</a>
                                 </li>
                             @endcan
                             <li>
-                                <a href="{{ url('/user/'.Auth::id()) }}">My Profile</a>
+                                <a href="{{ route('user.show',Auth::user()) }}">My Profile</a>
                             </li>
                             <li>
-                                <a href="{{ url('/logout') }}">Logout</a>
+                                <a href="{{ route('logout') }}">Logout</a>
                             </li>
                         </ul>
                     </li>

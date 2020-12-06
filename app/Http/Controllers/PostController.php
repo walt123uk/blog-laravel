@@ -61,7 +61,6 @@ class PostController extends Controller
 
     public function show(Posts $post)
     {
-        //$post = Posts::where('slug', $slug)->first();
         if (!$post) {
             return redirect('/')->withErrors('requested page not found');
         }

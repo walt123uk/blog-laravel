@@ -19,21 +19,21 @@
                         <td>Total Posts</td>
                         <td> {{$posts_count}}</td>
                         @if($author && $posts_count)
-                            <td><a href="{{ url('/my-all-posts')}}">Show All</a></td>
+                            <td><a href="{{ route('myposts')}}">Show All</a></td>
                         @endif
                     </tr>
                     <tr>
                         <td>Published Posts</td>
                         <td>{{$posts_active_count}}</td>
                         @if($posts_active_count)
-                            <td><a href="{{ url('/user/'.$user->id.'/posts')}}">Show All</a></td>
+                            <td><a href="{{ route('user.posts',$user)}}">Show All</a></td>
                         @endif
                     </tr>
                     <tr>
                         <td>Posts in Draft </td>
                         <td>{{$posts_draft_count}}</td>
                         @if($author && $posts_draft_count)
-                            <td><a href="{{ url('my-drafts')}}">Show All</a></td>
+                            <td><a href="{{ route('mydrafts')}}">Show All</a></td>
                         @endif
                     </tr>
                 </table>
@@ -49,7 +49,7 @@
             @if(!empty($latest_posts[0]))
                 @foreach($latest_posts as $latest_post)
                     <p>
-                        <strong><a href="{{ url('/'.$latest_post->slug) }}">{{ $latest_post->title }}</a></strong>
+                        <strong><a href="{{ route('post.show', $latest_post )}}">{{ $latest_post->title }}</a></strong>
                         <span class="well-sm">On {{ $latest_post->created_at->format('M d,Y \a\t h:i a') }}</span>
                     </p>
                 @endforeach
@@ -66,7 +66,7 @@
                     <div class="list-group-item">
                         <p>{{ $latest_comment->body }}</p>
                         <p>On {{ $latest_comment->created_at->format('M d,Y \a\t h:i a') }}</p>
-                        <p>On post <a href="{{ url('/'.$latest_comment->post->slug) }}">{{ $latest_comment->post->title }}</a></p>
+                        <p>On post <a href="{{ route('post.show',$latest_comment->post) }}">{{ $latest_comment->post->title }}</a></p>
                     </div>
                 @endforeach
             @else

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\PostRepositoryInterface;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -12,6 +13,19 @@ use Spatie\Tags\Tag;
 
 class PostController extends Controller
 {
+    protected $post;
+
+    /**
+     * PostController constructor.
+     *
+     * @param PostRepositoryInterface $post
+     */
+    public function __construct(PostRepositoryInterface $post)
+    {
+        $this->post = $post;
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -20,11 +34,14 @@ class PostController extends Controller
     public function index()
     {
         //fetch 5 posts from database which are active and latest
-        $posts = Posts::where('active', 1)->orderBy('created_at', 'desc')->paginate(5);
+        $data = [
+            'posts' => $this->post->active_five()
+        ];
+
         //page heading
         $title = 'Latest Posts';
         //return home.blade.php template from resources/views folder
-        return view('home')->withPosts($posts)->withTitle($title);
+        return view('home', $data)->withTitle($title);
     }
 
     public function create(Request $request)
@@ -73,7 +90,7 @@ class PostController extends Controller
         $tags = $post->tags()->get();
         $tagsAll = Tag::get();
         if ($post && ($request->user()->id == $post->author_id || $request->user()->can('edit posts')))
-            return view('posts.edit', compact('post', 'tags', 'tagsAll'));
+            return view('posts.edit', compact('post','tags', 'tagsAll'));
         return redirect('/')->withErrors('you have not sufficient permissions');
     }
 
@@ -120,7 +137,7 @@ class PostController extends Controller
     public function destroy(Request $request, Posts $post)
     {
         if ($post && ($post->author_id == $request->user()->id || $request->user()->can('delete posts'))) {
-            $post->delete();
+            $this->post->delete($post);
             $data['message'] = 'Post deleted Successfully';
         } else {
             $data['errors'] = 'Invalid Operation. You have not sufficient permissions';

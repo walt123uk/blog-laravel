@@ -40,10 +40,8 @@ Route::group(['middleware' => 'auth'], function () {
 //        // delete post
 //        Route::get('delete/{post}', [PostController::class, 'destroy']);
 //    };
-    // display user's all posts
-    Route::get('my-all-posts', [UserPostsController::class, 'user_posts_all'])->name('myposts');
     // display user's drafts
-    Route::get('my-drafts', [UserPostsController::class, 'user_posts_draft'])->name('mydrafts');
+    Route::get('user/{user}/drafts', [UserPostsController::class, 'user_posts_draft'])->name('user.drafts');
 });
 
 // store comment

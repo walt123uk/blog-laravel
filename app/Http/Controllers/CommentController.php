@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Comments;
 use App\Http\Requests\CommentFormRequest;
+use App\Posts;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    public function store(CommentFormRequest $request)
+    public function store(CommentFormRequest $request, Posts $post, Comments $comments)
     {
         //on_post, from_user, body
         $input['from_user'] = $request->user()->id;
@@ -16,6 +17,6 @@ class CommentController extends Controller
         $input['body'] = $request->input('body');
         $slug = $request->input('slug');
         Comments::create( $input );
-        return redirect($slug)->with('message', 'Comment published');
+        return view('posts.show')->withPost($post)->withComments($comments);;
     }
 }

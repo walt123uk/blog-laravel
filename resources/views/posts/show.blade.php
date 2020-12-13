@@ -31,7 +31,7 @@
             <p>Login to Comment</p>
         @else
             <div class="panel-body">
-                <form method="post" action="/comment/store">
+                <form method="post" action='{{ route('post.comments.store',$post, $comments) }}'>
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="on_post" value="{{ $post->id }}">
                     <input type="hidden" name="slug" value="{{ $post->slug }}">

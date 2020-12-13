@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserPostsController;
+use App\Http\Controllers\UserProfile;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
@@ -33,10 +34,13 @@ Route::group(['middleware' => 'auth'], function () {
 });
 // comments on posts
 Route::resource('post.comments', CommentController::class);
-// store comment
-Route::post('comment/store', [CommentController::class, 'store'])->middleware('throttle:comments')->name('comment.store');
+
 //users profile
-Route::get('user/{user}', [UserProfileController::class, 'show'])->where('user.id', '[0-9]+')->name('user.show');
+//Route::get('user/{user}', [UserProfileController::class, 'show'])->where('user.id', '[0-9]+')->name('user.show');
+
+Route::get('user/{user}', UserProfile::class)->name('user.show');
+
+
 // display list of posts
 Route::get('user/{user}/posts', [UserPostsController::class, 'user_posts'])->where('user.id', '[0-9]+')->name('user.posts');
 // display single post

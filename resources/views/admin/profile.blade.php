@@ -19,7 +19,7 @@
                         <td>Total Posts</td>
                         <td> {{$posts_count}}</td>
                         @if($author && $posts_count)
-                            <td><a href="{{ route('myposts')}}">Show All</a></td>
+                            <td><a href="{{ route('user.posts',$user)}}">Show All</a></td>
                         @endif
                     </tr>
                     <tr>
@@ -33,7 +33,7 @@
                         <td>Posts in Draft </td>
                         <td>{{$posts_draft_count}}</td>
                         @if($author && $posts_draft_count)
-                            <td><a href="{{ route('user.drafts')}}">Show All</a></td>
+                            <td><a href="{{ route('user.drafts',$user)}}">Show All</a></td>
                         @endif
                     </tr>
                 </table>

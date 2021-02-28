@@ -20,7 +20,7 @@ use App\Http\Controllers\PostController;
 */
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('/home', [PostController::class, 'index']);
-Route::get('/logout', [LoginController::class, 'logout']);
+Route::get('auth/logout', [LoginController::class, 'logout']);
 
 Route::group(['prefix' => 'auth'], function () {
     Auth::routes();

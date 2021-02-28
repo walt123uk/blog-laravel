@@ -60,6 +60,12 @@ class User extends Authenticatable
         return $this->hasMany('App\Comments', 'from_user');
     }
 
+    // user has one mobile
+    public function mobile()
+    {
+        return $this->hasOne(Mobile::class);
+    }
+
     public function can_post()
     {
         $role = $this->role;

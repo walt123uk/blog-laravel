@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserProfile extends Controller
 {
@@ -31,6 +32,11 @@ class UserProfile extends Controller
         $data['posts_draft_count'] = $data['posts_count'] - $data['posts_active_count'];
         $data['latest_posts'] = $data['user']->posts->where('active', '1')->take(5);
         $data['latest_comments'] = $data['user']->comments->take(5);
+        $data['total_users'] = DB::table('users')
+            ->select(DB::raw('name, count(*) as user_count'))
+            ->where('name', '<>', '')
+            ->groupBy('name')
+            ->get();
         return view('admin.profile', $data);
     }
 }

@@ -16,12 +16,7 @@
     </script>
     <form action="{{ route('post.store') }}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        <div class="form-group">
-            <input required="required" value="{{ old('title') }}" placeholder="Enter title here" type="text" name = "title"class="form-control" />
-        </div>
-        <div class="form-group">
-            <textarea id="createtextarea" name='body'class="form-control">{{ old('body') }}</textarea>
-        </div>
+        @include('posts._form')
         <div class="form-group row">
             <label for="avatar" class="col-md-4 col-form-label text-md-right">{{ __('Avatar (optional)') }}</label>
 

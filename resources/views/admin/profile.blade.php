@@ -30,6 +30,10 @@
                         @endif
                     </tr>
                     <tr>
+                        <td>Total Published Posts All Authors</td>
+                        <td>{{'rr'}}</td>
+                    </tr>
+                    <tr>
                         <td>Posts in Draft </td>
                         <td>{{$posts_draft_count}}</td>
                         @if($author && $posts_draft_count)
@@ -74,6 +78,18 @@
                     <p>You have not commented till now. Your latest 5 comments will be displayed here</p>
                 </div>
             @endif
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading"><h3>List of Users</h3></div>
+        <div class="list-group">
+            @foreach($total_users as $total_user)
+            <div class="list-group-item">
+                @foreach($total_user as $key => $value)
+                        <div>{{ $key." : ".$value }}</div>
+                @endforeach
+            </div>
+            @endforeach
         </div>
     </div>
 @endsection

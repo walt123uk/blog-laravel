@@ -43,12 +43,10 @@ class PostController extends Controller
         //return home.blade.php template from resources/views folder
         return view('home', $data)->withTitle($title);
     }
-
     public function create(Request $request)
     {
         return view('posts.create');
     }
-
     public function store(PostFormRequest $request)
     {
         $post = new Posts();
@@ -75,7 +73,6 @@ class PostController extends Controller
         $post->save();
         return redirect('post/' . $post->id)->withMessage($message);
     }
-
     public function show(Posts $post)
     {
         if (!$post) {
@@ -84,7 +81,6 @@ class PostController extends Controller
         $comments = $post->comments;
         return view('posts.show')->withPost($post)->withComments($comments);
     }
-
     public function edit(Request $request, Posts $post)
     {
         $tags = $post->tags()->get();
@@ -93,7 +89,6 @@ class PostController extends Controller
             return view('posts.edit', compact('post','tags', 'tagsAll'));
         return redirect('/')->withErrors('you have not sufficient permissions');
     }
-
     public function update(Request $request, Posts $post)
     {
         if ($post && ($post->author_id == $request->user()->id || $request->user()->can('edit posts'))) {
@@ -127,7 +122,6 @@ class PostController extends Controller
             return redirect('/')->withErrors('you have not sufficient permissions');
         }
     }
-
     /*
   * Delete of a particular post
   *

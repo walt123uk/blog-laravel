@@ -69,6 +69,10 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        $mobile = new Mobile;
+        $mobile->mobile = '123456789';
+        $user->mobile()->save($mobile);
+
         return $user;
     }
 }

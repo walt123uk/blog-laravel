@@ -35,9 +35,10 @@ class PostController extends Controller
     {
         //fetch 5 posts from database which are active and latest
         $data = [
-            'posts' => $this->post->active_five()
+            'posts' => $this->post->active_five(),
+            'active_posts' => Posts::active()->orderBy('created_at')->get()
         ];
-
+        dd($data['active_posts']);
         //page heading
         $title = 'Latest Posts';
         //return home.blade.php template from resources/views folder

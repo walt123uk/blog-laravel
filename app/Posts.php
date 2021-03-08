@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Testing\Concerns\InteractsWithConsole;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -27,5 +28,16 @@ class Posts extends Model implements HasMedia
     public function author()
     {
         return $this->belongsTo('App\User', 'author_id');
+    }
+
+    /**
+     * Scope a query to only include active posts.
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeActive(Builder $query)
+    {
+        return $query->where('active', 1);
     }
 }
